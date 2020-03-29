@@ -16,7 +16,8 @@ const UserSchema = new Schema({
   links: [{type: Types.ObjectId, ref: 'Trucks'}],
 });
 
-UserSchema.plugin(uniqueValidator);
+UserSchema.plugin(uniqueValidator,
+    {message: 'Error, expected {PATH} to be unique.'});
 
 UserSchema.pre('save', function(next) {
   const User = this;
