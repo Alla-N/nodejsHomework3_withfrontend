@@ -1,11 +1,13 @@
 const express = require('express');
+const {userValidationRules, validate} = require('../middleware/validator.js');
 const Router = express.Router;
 const router = new Router;
-const User = require('../helpers/user_model');
+const User = require('../models/User');
 
-
-router.post('/registration', async (req, res) => {
+// eslint-disable-next-line max-len
+router.post('/registration', userValidationRules(), validate, async (req, res) => {
   console.log('POST: ', req.url);
+
   const newUser = await new User({
     username: req.body.username,
     password: req.body.password,
@@ -14,12 +16,12 @@ router.post('/registration', async (req, res) => {
   });
 
   newUser.save()
-      .then(()=>{
-        res.status(200).json({status: 'new user created'});
+
+      .then((response)=>{
+        res.status(200).json({message: 'new user created'});
       })
       .catch((e)=>{
-        console.log('Save user return error: ', e);
-        res.json({'status': e});
+        res.status(500).json({message: `Error: ${e}`});
       });
 });
 

@@ -1,23 +1,34 @@
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const express = require('express');
 const Router = express.Router;
 const router = new Router;
-const User = require('../helpers/user_model');
+const User = require('../models/User');
 
 router.post('/login', async (req, res) => {
-  const password = req.body.password;
-  const username = req.body.username;
+  const {password, email} = req.body;
 
-  User.findOne({username: username}, function(err, user) {
-    if (err) throw err;
 
-    user.comparePassword(password, function(err, isMatch) {
-      if (err) throw err;
-      res.json({
-        status: 1,
-        id: user._id,
-        message: 'success',
-      });
-    });
+  User.findOne({email: email}, function(err, user) {
+    if (err || user === null) {
+      res.json({message: 'Data is incorrect'});
+    } else {
+      const isPasswordValid = user.validatePassword(password);
+      if (isPasswordValid) {
+        const {secret} = config.get('JWT');
+        const token = jwt.sign({
+          userId: user._id,
+        }, secret, {expiresIn: '1h'});
+
+        res.json({
+          token,
+          id: user._id,
+          message: 'success',
+        });
+      } else {
+        res.json({message: 'Data is incorrect'});
+      }
+    }
   });
 });
 
