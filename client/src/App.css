@@ -7,17 +7,25 @@
     box-sizing: border-box;
 }
 
+a {
+    display: inline-block;
+}
+
 .App {
     background: linear-gradient(to right, rgba(0,0,0,.8), rgba(0,0,0,.8)), url("image/background.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .container {
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -44,7 +52,7 @@
 }
 
 .welcome__block {
-    width: 50%;
+    width: 100%;
 }
 
 .welcome__link {
@@ -253,3 +261,68 @@
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
+
+/*------------userpage-------------*/
+
+.user {
+    width: 100%;
+    background-color: whitesmoke;
+    min-height: 100vh;
+    padding: 20px 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.nav__list, .user__status {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.nav__item {
+    list-style: none;
+    cursor: pointer;
+    width: 33%;
+    height: 64px;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+}
+
+.nav__item:hover {
+    opacity: 0.7;
+}
+
+.user__title {
+    width: 100%;
+    text-align: center;
+}
+
+.user__state {
+    width: 70%;
+}
+
+.user__button {
+    width: 30%;
+}
+
+.order__p {
+    text-align: center;
+}
+
+.order__button {
+    max-width: 100%;
+    width: 300px;
+}
+
+
+
+
+
+
+
+
+
