@@ -14,7 +14,7 @@ router.get('/user/:id', (req, res)=>{
     const userId = jwt.verify(token, secret);
 
     if (pageId !== userId) {
-      return res.status(403).json({status: 'Access rejected'});
+      return res.status(403).json({message: 'Access rejected'});
     }
 
     User.findById(userId)
@@ -25,7 +25,7 @@ router.get('/user/:id', (req, res)=>{
           return res.json({status: err.name});
         });
   } else {
-    res.status(403).json({status: 'Access rejected!'});
+    res.status(403).json({message: 'Access rejected!'});
   }
 });
 module.exports = router;

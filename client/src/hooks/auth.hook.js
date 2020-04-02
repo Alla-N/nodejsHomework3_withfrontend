@@ -5,6 +5,7 @@ export const useAuth = () => {
   const [userData, setUserData] = useState({
     id:'',
     username:'',
+    email: '',
     role:'',
   });
 
@@ -14,6 +15,7 @@ export const useAuth = () => {
     setUserData({
       id:user.id,
       username:user.username,
+      email: user.email,
       role:user.role,
     });
 
@@ -26,6 +28,7 @@ export const useAuth = () => {
     setUserData({
       id:'',
       username:'',
+      email:'',
       role:'',
     });
 

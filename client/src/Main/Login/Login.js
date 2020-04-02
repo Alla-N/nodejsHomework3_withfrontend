@@ -19,7 +19,7 @@ function Login () {
       const data  = await request('/api/login', 'POST',{...form});
       auth.login(data.token, data.responseUser);
     }catch(e){
-      message(e);
+      message(e.message);
     }
   };
 
@@ -29,12 +29,12 @@ function Login () {
 
   return (
       <div className="login">
-        <Link to ="/" className="login__close">✖</Link>
-        <h1 className="login__title">Login</h1>
-        <form className="login__form" onSubmit={loginHandler}>
-            <p className="login__p">
+        <Link to ="/" className="button__close">✖</Link>
+        <h1 className="form__title">Login</h1>
+        <form className="login__form form" onSubmit={loginHandler}>
+            <p className="form__p">
               <input
-              className="login__input"
+              className="form__input"
               type="email"
               name="email"
               placeholder="Email"
@@ -42,9 +42,9 @@ function Login () {
               onChange={changeHandler}
             />
           </p>
-          <p className="login__p">
+          <p className="form__p">
             <input
-              className="login__input"
+              className="form__input"
               type="password"
               name="password"
               autoComplete='true'
@@ -53,9 +53,9 @@ function Login () {
               onChange={changeHandler}
             />
           </p>
-          <p className="login__p submit">
+          <p className="form__p submit">
             <input
-              className="login__submit"
+              className="form__submit"
               type="submit"
               name="commit"
               value="Login"
