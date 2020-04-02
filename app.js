@@ -10,7 +10,7 @@ const mongoURL = `${protocol}://${host}:${port}/${name}`;
 const registrationRouter = require('./server/api/routes/registration');
 const loginRouter = require('./server/api/routes/login');
 const userRouter = require('./server/api/routes/user');
-const changePasswordRouter = require ('./server/api/routes/changePassword');
+const changePasswordRouter = require('./server/api/routes/changePassword');
 
 
 const start = async () => {
