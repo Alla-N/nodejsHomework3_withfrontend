@@ -27,7 +27,7 @@ function Driver () {
     <div className="user__nav nav">
       <ul className="nav__list">
         <li className="nav__item">
-          <Link to='/user/details'><img src={require("../image/user.png")} alt="user"/></Link>
+          <Link to='/user_details'><img src={require("../image/user.png")} alt="user"/></Link>
         </li>
         <li className="nav__item">
             <Link to='/user/trucks'><img src={require("../image/truck.png")} alt="truck"/></Link>

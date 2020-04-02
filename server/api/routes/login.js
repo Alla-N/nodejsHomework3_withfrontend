@@ -14,6 +14,7 @@ router.post('/login', async (req, res) => {
       res.json({message: 'Data is incorrect'});
     } else {
       const isPasswordValid = user.validatePassword(password);
+
       if (isPasswordValid) {
         const {secret} = config.get('JWT');
         const token = jwt.sign({
@@ -23,16 +24,17 @@ router.post('/login', async (req, res) => {
         const responseUser = {
           id: user._id,
           username: user.username,
+          email: user.email,
           role: user.role,
         };
 
-        res.json({
+        res.status(200).json({
           token,
           responseUser,
           message: 'success',
         });
       } else {
-        res.json({message: 'Data is incorrect'});
+        res.status(403).json({message: 'Data is incorrect'});
       }
     }
   });

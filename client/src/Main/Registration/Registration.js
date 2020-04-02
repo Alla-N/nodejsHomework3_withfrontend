@@ -32,12 +32,12 @@ function Registration () {
 
   return (
       <div className="login">
-        <Link to="/" className="login__close">✖</Link>
-        <h1 className="login__title">Registration</h1>
-        <form className="login__form" onSubmit={registerHandler}>
-          <p className="login__p">
+        <Link to="/" className="button__close">✖</Link>
+        <h1 className="form__title">Registration</h1>
+        <form className="login__form form" onSubmit={registerHandler}>
+          <p className="form__p">
             <input
-              className="login__input"
+              className="form__input"
               type="email"
               name="email"
               placeholder="Email"
@@ -45,9 +45,9 @@ function Registration () {
               onChange={changeHandler}
             />
           </p>
-          <p className="login__p">
+          <p className="form__p">
             <input
-              className="login__input"
+              className="form__input"
               type="text"
               name="username"
               placeholder="Username"
@@ -55,9 +55,9 @@ function Registration () {
               onChange={changeHandler}
             />
           </p>
-          <p className="login__p">
+          <p className="form__p">
             <input
-              className="login__input"
+              className="form__input"
               type="password"
               name="password"
               autoComplete='true'
@@ -92,9 +92,9 @@ function Registration () {
               Shipper
             </label>
           </div>
-          <p className="login__p submit">
+          <p className="form__p submit">
             <input
-              className="login__submit"
+              className="form__submit"
               type="submit"
               name="commit"
               value="Registration"
