@@ -20,9 +20,15 @@ router.post('/login', async (req, res) => {
           userId: user._id,
         }, secret, {expiresIn: '1h'});
 
+        const responseUser = {
+          id: user._id,
+          username: user.username,
+          role: user.role,
+        };
+
         res.json({
           token,
-          id: user._id,
+          responseUser,
           message: 'success',
         });
       } else {

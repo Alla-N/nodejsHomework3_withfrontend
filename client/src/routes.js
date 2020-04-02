@@ -4,19 +4,15 @@ import UserPage from './UserPage/UserPage';
 import Welcome from './Main/Welcome/Welcome';
 import Login from './Main/Login/Login';
 import Registration from './Main/Registration/Registration';
-import Create from './Create/Create';
 
 export const useRoutes = isAuthenticated => {
 
   if(isAuthenticated){
     return (
-      <div>
+      <div className="container">
       <Switch>
         <Route pats="/userpage" exact>
           <UserPage/>
-        </Route>
-        <Route pats="/create">
-          <Create/>
         </Route>
       </Switch>
       <Redirect to="/userpage" />
@@ -25,6 +21,7 @@ export const useRoutes = isAuthenticated => {
   }
 
   return (
+    <div className="container">
     <Switch>
       <Route path="/" exact>
         <Welcome/>
@@ -37,5 +34,6 @@ export const useRoutes = isAuthenticated => {
       </Route>
       <Redirect to="/"/>
     </Switch>
+    </div>
   )
 };

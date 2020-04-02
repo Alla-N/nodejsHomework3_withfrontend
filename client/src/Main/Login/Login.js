@@ -1,28 +1,23 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useHttp} from '../../hooks/http.hook';
 import {useMessage} from '../../hooks/message.hook';
-import {AuthContext} from '../../context/auth.context';
+import {AuthContext} from '../../context/AuthContext';
 
 function Login () {
-  const auth = useContext(AuthContext);
+  const auth = useContext(AuthContext) ;
   const message = useMessage();
-  const {loading, error, request, clearError} = useHttp();
+  const {loading, request} = useHttp();
+
   const [form, setForm] = useState({
     email: '', password: ''
   });
-
-  useEffect( ()=> {
-    message(error);
-    clearError();
-  }, [clearError, error, message]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
     try{
       const data  = await request('/api/login', 'POST',{...form});
-      message(data.message);
-      auth.login(data.token, data.id);
+      auth.login(data.token, data.responseUser);
     }catch(e){
       message(e);
     }
