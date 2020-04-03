@@ -3,7 +3,6 @@ module.exports = {
     'protocol': 'http',
     'host': 'localhost',
     'port': 8000,
-    'logsPath': 'data/requestLogs.json',
   },
   'dataBase': {
     'protocol': 'mongodb',

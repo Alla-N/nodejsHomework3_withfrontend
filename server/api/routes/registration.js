@@ -10,23 +10,20 @@ router.post(
     userValidationRules(),
     validate,
     async (req, res) => {
-      console.log('POST: ', req.url);
+      try {
+        const newUser = await new User({
+          username: req.body.username,
+          password: req.body.password,
+          email: req.body.email,
+          role: req.body.role,
+        });
 
-      const newUser = await new User({
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        role: req.body.role,
-      });
+        await newUser.save();
 
-      newUser.save()
-
-          .then((response)=>{
-            res.status(200).json({message: 'new user created'});
-          })
-          .catch((e)=>{
-            res.status(500).json({message: `Error: ${e}`});
-          });
+        res.status(201).json({message: 'new user created'});
+      } catch (e) {
+        res.status(500).json({message: `Error: ${e}`});
+      }
     });
 
 

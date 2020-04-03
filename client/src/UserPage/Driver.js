@@ -30,7 +30,7 @@ function Driver () {
           <Link to='/user_details'><img src={require("../image/user.png")} alt="user"/></Link>
         </li>
         <li className="nav__item">
-            <Link to='/user/trucks'><img src={require("../image/truck.png")} alt="truck"/></Link>
+            <Link to='/user_trucks'><img src={require("../image/truck.png")} alt="truck"/></Link>
         </li>
         <li className="nav__item" onClick={logout}>
           <Link to='/'><img src={require("../image/exit.png")} alt="exit"/></Link>

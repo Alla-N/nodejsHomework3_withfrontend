@@ -2,6 +2,7 @@ import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import UserPage from './UserPage/UserPage';
 import UserDetails from './UserPage/UserDetails';
+import UserTrucks from './UserPage/UserTrucks';
 import Welcome from './Main/Welcome/Welcome';
 import Login from './Main/Login/Login';
 import Registration from './Main/Registration/Registration';
@@ -17,6 +18,9 @@ export const useRoutes = isAuthenticated => {
         </Route>
         <Route path="/user_details">
           <UserDetails/>
+        </Route>
+        <Route path="/user_trucks">
+          <UserTrucks/>
         </Route>
       </Switch>
       <Redirect to="/userpage" />

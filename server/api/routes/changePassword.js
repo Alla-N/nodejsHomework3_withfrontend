@@ -22,15 +22,16 @@ router.patch(
             userId,
             function(err, user) {
               if (err || user === null) {
-                res.json({message: 'Data is incorrect'});
+                res.status(404).json({message: 'Data is incorrect'});
               } else {
                 const isPasswordValid = user.validatePassword(currentPassword);
                 if (isPasswordValid) {
                   user.password = newPassword;
                   user.save();
-                  res.json({message: 'Done! Login again with new password.'});
+                  res.status(200).json({
+                    message: 'Done! Login again with new password.'});
                 } else {
-                  res.json({message: 'Data is incorrect'});
+                  res.status(403).json({message: 'Data is incorrect'});
                 }
               }
             });
