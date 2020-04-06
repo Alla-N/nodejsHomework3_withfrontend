@@ -1,91 +1,125 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import {AuthContext} from '../context/AuthContext';
+import {UserContext} from '../context/UserContext';
 import {Link} from 'react-router-dom';
 import {useMessage} from '../hooks/message.hook';
 import {useHttp} from '../hooks/http.hook';
+import {createTruckList} from '../functions/createTruckList';
 
 function UserTrucks () {
   const auth = useContext(AuthContext);
+  const user = useContext(UserContext);
   const message = useMessage();
   const {loading, request} = useHttp();
 
   const [form, setForm] = useState({
-    userId: auth.userData.id,
-    model: '',
-    width: '',
-    height: '',
-    length: '',
-    payload: '',
+    userId: auth.userData.id
   });
 
-  const changeHandler = event => {
-    setForm({...form, [event.target.name]: event.target.value})
+  const changeHandler = (e) => {
+    setForm({...form, [e.target.name]: e.target.value})
   };
 
-  const handleChangePassword = async (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
 
     try{
       const data  = await request('/api/truck', 'POST',{...form});
-      message(data);
+      message(data.message);
+      user.addOneTruck(data.truck);
+
     }catch(e){
       message(e.message);
     }
   };
 
-  const deleteTruck = (e) => {
-    console.log(e.target);
+  const deleteTruck = async (e) => {
+    try{
+      const data  = await request(
+        `/api/truck/${auth.userData.id}`,
+        'DELETE',
+        {
+          truckId: e.target.value
+        });
+      message(data.message);
+      user.deleteOneTruck(e.target.value);
+
+    }catch(e){
+      message(e.message);
+    }
   };
 
-  const assignTruck = (e) => {
-    console.log(e.target);
+  const assignTruck = async (e) => {
+    try{
+      const [currentTruck] = user.trucksData.filter(item=>item.status === 'assigned');
+      let currentTruckId = currentTruck ? currentTruck._id : null;
+
+      if(currentTruck) {
+        const data  = await request(
+          `/api/truck_switch/${auth.userData.id}`,
+          'PUT',
+          {
+            currentTruckId: currentTruckId ,
+            nextTruckId: e.target.value
+          });
+        message(data.message);
+        user.switchAssignTruck(currentTruck._id, e.target.value);
+      }else{
+        const data  = await request(
+          `/api/truck_assign/${auth.userData.id}`,
+          'PUT',
+          {
+            nextTruckId: e.target.value
+          });
+        message(data.message);
+        user.switchAssignTruck(null, e.target.value);
+      }
+
+  }catch(e){
+    message(e.message);
+  }
   };
 
-  const createTruckList = (array) => {
-    const ul = document.getElementById('trucks');
-    const fragment = document.createDocumentFragment();
-    array.forEach(e=>{
-      const deleteButton = document.createElement('BUTTON');
-      deleteButton.className = 'trucks-list__delete';
-      deleteButton.addEventListener('click', deleteTruck);
-      deleteButton.innerText = 'Delete';
-      deleteButton.value = e._id;
+  const endWork = async (e) => {
+    try{
+      const [currentTruck] = user.trucksData.filter(item=>item.status === 'assigned');
+      if(currentTruck){
+        const data  = await request(
+          `/api/truck_end/${auth.userData.id}`,
+          'PUT',
+          {
+            currentTruckId: currentTruck._id,
+          });
+        message(data.message);
+        user.switchAssignTruck(currentTruck._id, null);
+      }else{
+        message('You have no assigned truck')
+      }
 
-      const assignButton = document.createElement('BUTTON');
-      assignButton.className = 'trucks-list__assign';
-      assignButton.addEventListener('click', assignTruck);
-      assignButton.innerText = 'Assign';
-      assignButton.value = e._id;
-
-      let li = document.createElement('LI');
-      li.innerHTML = `${e.model}: ` ;
-      li.appendChild(deleteButton);
-      li.appendChild(assignButton);
-      li.id = e._id;
-      fragment.appendChild(li);
-    });
-
-    ul.appendChild(fragment);
+    }catch(e){
+      message(e.message);
+    }
   };
+
+  const editTruck = (e) => {
+    console.log(e.target.value);
+  };
+
 
   useEffect(()=>{
-    request(
-      `/api/truck/${auth.userData.id}`,
-      'GET',
-      null)
-    .then(response=>{
-      createTruckList(response.trucks);
-    })
-      .catch((e)=>{
-        message(e)
-      });
+    createTruckList(user.trucksData, deleteTruck, assignTruck, editTruck)
+  },[user.trucksData]);
 
-  },[]);
 
   return (
     <div className="user">
       <Link to ="/userpage" className="button__close">✖</Link>
-      <form className="user__form form" onSubmit={handleChangePassword}>
+      <form className="user__form form" onSubmit={handleSubmitForm}>
         <h3 className="form__title">Create new truck</h3>
         <p className="form__p">
           <input
@@ -150,9 +184,16 @@ function UserTrucks () {
           />
         </p>
       </form>
-      <ul className="truck-list" id="trucks">
-
-      </ul>
+      <div className="user__list list">
+        <h1 className="list__title">My trucks</h1>
+        <ul className="list__ul" id="listUl">
+        </ul>
+        <br/>
+        <br/>
+        <div className="user__end end">
+          <button className="list__button end__button" onClick={endWork}>End work</button>
+        </div>
+      </div>
     </div>
   )
 }

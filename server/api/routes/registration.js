@@ -16,6 +16,7 @@ router.post(
           password: req.body.password,
           email: req.body.email,
           role: req.body.role,
+          status: 'ready',
         });
 
         await newUser.save();

@@ -35,6 +35,7 @@ export const useAuth = () => {
     localStorage.removeItem('userAuthData');
   },[]);
 
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('userAuthData'));
 
@@ -45,6 +46,6 @@ export const useAuth = () => {
   },[login]);
 
 
-  return{login, logout, token,userData}
+  return{login, logout, token, userData}
 
 };
