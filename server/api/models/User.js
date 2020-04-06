@@ -12,8 +12,9 @@ const UserSchema = new Schema({
     uniqueCaseInsensitive: true,
   },
   password: {type: String, required: true},
-  role: String,
-  links: [{type: Types.ObjectId, ref: 'Trucks'}],
+  role: {type: String, required: true},
+  status: {type: String, required: true},
+  trucks: [{type: Types.ObjectId, ref: 'Truck'}],
 });
 
 UserSchema.plugin(uniqueValidator,

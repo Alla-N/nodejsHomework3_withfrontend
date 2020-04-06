@@ -10,7 +10,8 @@ const mongoURL = `${protocol}://${host}:${port}/${name}`;
 const registrationRouter = require('./server/api/routes/registration');
 const loginRouter = require('./server/api/routes/login');
 const userRouter = require('./server/api/routes/user');
-const changePasswordRouter = require ('./server/api/routes/changePassword');
+const changePasswordRouter = require('./server/api/routes/changePassword');
+const truckRouter = require('./server/api/routes/truck');
 
 
 const start = async () => {
@@ -40,6 +41,7 @@ app.use('/api', registrationRouter);
 app.use('/api', loginRouter);
 app.use('/api', userRouter);
 app.use('/api', changePasswordRouter);
+app.use('/api', truckRouter);
 
 app.listen(serverPort, (err) => {
   if (err) {

@@ -19,10 +19,10 @@ router.get('/user/:id', (req, res)=>{
 
     User.findById(userId)
         .then((user) => {
-          res.json(user.id);
+          res.status(200).json(user.id);
         })
         .catch((err) => {
-          return res.json({status: err.name});
+          return res.status(404).json({status: err.name});
         });
   } else {
     res.status(403).json({message: 'Access rejected!'});

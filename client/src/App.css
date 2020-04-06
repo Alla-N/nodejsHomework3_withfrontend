@@ -272,7 +272,6 @@ a {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     position: relative;
 }
 
@@ -350,6 +349,66 @@ a {
     border-radius: 3px;
     -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/*---------------trucks------------*/
+.list {
+    padding: 15px 0;
+}
+
+.list__title {
+    text-align: center;
+    margin: 10px auto;
+}
+
+.list__item {
+     list-style: none;
+     height: 40px;
+     line-height: 40px;
+     width: 100%;
+     font-size: 17px;
+     font-weight: bold;
+     position: relative;
+ }
+
+.list__item[value='1']:after {
+     content: 'isAssigned';
+     color:green;
+     position: absolute;
+     top: 0;
+     right: 0;
+ }
+
+
+.list__button {
+    cursor: pointer;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 15px;
+    margin: 0 15px;
+    font-size: 15px;
+    color: #2eabb3;
+    border-radius: 7px;
+    outline: 0;
+    border-color: #20797e #1f757a #195d62;
+}
+
+.list__button-active {
+    background: #33b9c7;
+    color: white;
+}
+
+.list__button:hover {
+    background: #33b9c7;
+    color: white;
+}
+
+.end {
+    text-align: center;
+}
+
+.end__button {
+    margin: 0 auto;
 }
 
 
