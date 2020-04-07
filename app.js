@@ -12,6 +12,7 @@ const loginRouter = require('./server/api/routes/login');
 const userRouter = require('./server/api/routes/user');
 const changePasswordRouter = require('./server/api/routes/changePassword');
 const truckRouter = require('./server/api/routes/truck');
+const loadRouter = require('./server/api/routes/load');
 
 
 const start = async () => {
@@ -42,6 +43,7 @@ app.use('/api', loginRouter);
 app.use('/api', userRouter);
 app.use('/api', changePasswordRouter);
 app.use('/api', truckRouter);
+app.use('/api', loadRouter);
 
 app.listen(serverPort, (err) => {
   if (err) {

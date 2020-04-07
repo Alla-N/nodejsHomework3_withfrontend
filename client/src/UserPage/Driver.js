@@ -1,15 +1,17 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext';
 import {UserContext} from '../context/UserContext';
+import {useHttp} from '../hooks/http.hook';
+import {useMessage} from '../hooks/message.hook';
 
 
 function Driver () {
+  const {request} = useHttp();
+  const message = useMessage();
   const auth = useContext(AuthContext);
   const user = useContext(UserContext);
   const {userData, logout} = auth;
-
-  console.log(user);
 
   const [userState, setUserState] = useState({
     state: 'Inactive',
@@ -23,6 +25,20 @@ function Driver () {
     status: 'Pick up',
     address: 'address 1',
     order_action: 'Pick up'
+  },[]);
+
+  useEffect(()=>{
+    request(
+      `/api/truck/${auth.userData.id}`,
+      'GET',
+      null)
+      .then(response=>{
+        user.setTrucks(response.trucks);
+      })
+      .catch((e)=>{
+        message(e)
+      });
+
   },[]);
 
 
@@ -44,7 +60,6 @@ function Driver () {
       <div className="user__status">
         <h2 className="user__title">My status</h2>
         <span className="user__state">{userData.status}</span>
-        <button className="user__button"><Link to="/user_trucks">Change status</Link></button>
       </div>
       {userState.hasOrder?
         (<div className="user__order order">
@@ -55,7 +70,7 @@ function Driver () {
             {orderState.status} address: {orderState.address}
           </p>
           <p className="order__p">
-            <button className="order__button">{orderState.order_action}</button>
+            <button  className="user__button">{orderState.order_action}</button>
           </p>
           <div className="order__map">google map</div>
         </div>): null

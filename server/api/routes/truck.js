@@ -179,7 +179,7 @@ router.patch('/truck', async (req, res) => {
       }
 
       if (truck.status === 'assigned') {
-        return res.status(403).json({message: 'You can not edit assi'});
+        return res.status(403).json({message: 'You can not edit assigned truck'});
       }
 
       truck.model = model;

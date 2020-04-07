@@ -10,6 +10,7 @@ export const useTrucks = (callback, deps) => {
   },[]);
 
   const addOneTruck = useCallback((truck) => {
+
     setTrucksData([...trucksData, truck]);
 
   }, [trucksData]);
