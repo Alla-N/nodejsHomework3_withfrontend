@@ -1,11 +1,15 @@
 import React, {useContext, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext';
+import {UserContext} from '../context/UserContext';
 
 
 function Driver () {
   const auth = useContext(AuthContext);
-  const {logout} = auth;
+  const user = useContext(UserContext);
+  const {userData, logout} = auth;
+
+  console.log(user);
 
   const [userState, setUserState] = useState({
     state: 'Inactive',
@@ -38,13 +42,13 @@ function Driver () {
       </ul>
     </div>
       <div className="user__status">
-        <h2 className="user__title">State</h2>
-        <span className="user__state">{userState.state}</span>
-        <button className="user__button">{userState.state_action}</button>
+        <h2 className="user__title">My status</h2>
+        <span className="user__state">{userData.status}</span>
+        <button className="user__button"><Link to="/user_trucks">Change status</Link></button>
       </div>
       {userState.hasOrder?
         (<div className="user__order order">
-          <h2 className="user__title">Order</h2>
+          <h2 className="user__title">My order</h2>
           <p className="order__name">Shipper name: {orderState.name}</p>
           <p className="order__phone">Shipper contact: {orderState.phone}</p>
           <p className="order__address">

@@ -18,7 +18,7 @@ export const createListItem = (item, deleteFunction, assignFunction, editFunctio
   editButton.addEventListener('click', editFunction);
   editButton.innerText = '✏️';
   editButton.title = 'Edit';
-  assignButton.value = item._id;
+  editButton.value = item._id;
 
   let li = document.createElement('LI');
   li.innerHTML = `${item.model} ` ;

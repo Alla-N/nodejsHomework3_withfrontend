@@ -18,6 +18,16 @@ export const useTrucks = (callback, deps) => {
     setTrucksData(trucksData.filter(item =>item._id !== id));
   },[trucksData]);
 
+  const editOneTruck = useCallback((id, truck) => {
+    let newArr = [...trucksData];
+
+      const truckIndex = newArr.findIndex(i => i._id ===id);
+      newArr[truckIndex] = truck;
+
+    setTrucksData(newArr);
+
+  }, [trucksData]);
+
   const switchAssignTruck = useCallback((previd, id)=> {
     let newArr = [...trucksData];
 
@@ -37,6 +47,6 @@ export const useTrucks = (callback, deps) => {
 
 
 
-  return{setTrucks, trucksData, setTrucksData, addOneTruck, deleteOneTruck, switchAssignTruck }
+  return{setTrucks, setTrucksData, addOneTruck, deleteOneTruck, editOneTruck, switchAssignTruck, trucksData}
 
 };
