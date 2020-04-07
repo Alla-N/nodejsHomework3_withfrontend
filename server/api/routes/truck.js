@@ -152,6 +152,52 @@ router.put('/truck_end/:id', async (req, res) => {
   }
 });
 
+router.patch('/truck', async (req, res) => {
+  try {
+    const {
+      userId,
+      id,
+      model,
+      width,
+      height,
+      length,
+      payload,
+    } = req.body;
+
+
+    const truck = await Truck.findById(id);
+    const user= await User.findById(userId);
+
+
+    if (user.status === 'onload' ) {
+      return res.status(403).json({message: 'You can not do it while onload'});
+    }
+
+    if (truck) {
+      if (String(truck.created_by) !== userId ) {
+        return res.status(403).json({message: 'Access rejected'});
+      }
+
+      if (truck.status === 'assigned') {
+        return res.status(403).json({message: 'You can not edit assi'});
+      }
+
+      truck.model = model;
+      truck.dimensions.width = width;
+      truck.dimensions.height = height;
+      truck.dimensions.length = length;
+      truck.payload = payload;
+
+      truck.save();
+      return res.status(200).json({message: 'Truck updated', truck});
+    } else {
+      return res.status(404).json({message: 'Truck not found'});
+    }
+  } catch (e) {
+    return res.status(404).json({message: e.name});
+  }
+});
+
 module.exports = router;
 
 

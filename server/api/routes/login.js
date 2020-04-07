@@ -25,6 +25,7 @@ router.post('/login', (req, res) => {
           username: user.username,
           email: user.email,
           role: user.role,
+          status: user.status,
         };
 
         res.status(200).json({

@@ -1,21 +1,22 @@
 import React, {
-  useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react';
-import {AuthContext} from '../context/AuthContext';
-import {UserContext} from '../context/UserContext';
+import { useHistory } from "react-router-dom";
+import {AuthContext} from '../../context/AuthContext';
+import {UserContext} from '../../context/UserContext';
 import {Link} from 'react-router-dom';
-import {useMessage} from '../hooks/message.hook';
-import {useHttp} from '../hooks/http.hook';
-import {createTruckList} from '../functions/createTruckList';
+import {useMessage} from '../../hooks/message.hook';
+import {useHttp} from '../../hooks/http.hook';
+import {createTruckList} from '../../functions/createTruckList';
 
 function UserTrucks () {
   const auth = useContext(AuthContext);
   const user = useContext(UserContext);
   const message = useMessage();
   const {loading, request} = useHttp();
+  let history = useHistory();
 
   const [form, setForm] = useState({
     userId: auth.userData.id
@@ -107,8 +108,14 @@ function UserTrucks () {
   };
 
   const editTruck = (e) => {
-    console.log(e.target.value);
+    let [truck] = user.trucksData.filter(item=>item._id === e.target.value);
+    if(truck.status === 'assigned'){
+      alert ('You can not edit assigned truck!');
+    }else{
+      history.push(`/truck_details/${e.target.value}`);
+    }
   };
+
 
 
   useEffect(()=>{

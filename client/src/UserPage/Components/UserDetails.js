@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import {AuthContext} from '../context/AuthContext';
-import {useHttp} from '../hooks/http.hook';
-import {useMessage} from '../hooks/message.hook';
+import {AuthContext} from '../../context/AuthContext';
+import {useHttp} from '../../hooks/http.hook';
+import {useMessage} from '../../hooks/message.hook';
 import {Link} from 'react-router-dom';
 
 function UserDetails () {
@@ -35,7 +35,7 @@ function UserDetails () {
     <div className="user">
       <Link to ="/userpage" className="button__close">✖</Link>
       <div className="user__photo">
-        <img className="user__img" src={require('../image/no-photo.png')} alt=""/>
+        <img className="user__img" src={require('../../image/no-photo.png')} alt=""/>
       </div>
       <div className="user__name">
         <span className="user__span"> Username: </span> {auth.userData.username}

@@ -8,6 +8,7 @@ export const UserContext = createContext({
   setTrucks: noop,
   addOneTruck: noop,
   deleteOneTruck: noop,
+  editOneTruck: noop,
   switchAssignTruck: noop,
   setLoads: noop,
 });
