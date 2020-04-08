@@ -11,4 +11,8 @@ export const UserContext = createContext({
   editOneTruck: noop,
   switchAssignTruck: noop,
   setLoads: noop,
+  addOneLoad: noop,
+  deleteOneLoad: noop,
+  editOneLoad: noop,
+  changeLoadStatus: noop,
 });

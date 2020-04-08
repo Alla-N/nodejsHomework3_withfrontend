@@ -309,7 +309,7 @@ a {
 }
 
 .user__state {
-    width: 60%;
+    width: 100%;
     height: 50px;
     line-height: 50px;
     border: 1px solid gray;
@@ -332,21 +332,12 @@ a {
     border-color: #20797e #1f757a #195d62;
 }
 
-.user__button > a {
-    color: #2eabb3;
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    height: 100%;
-}
 
 .user__button:hover {
     background: #33b9c7;
-}
-
-.user__button:hover > a {
     color: white;
 }
+
 
 .order__p {
     text-align: center;
@@ -411,12 +402,20 @@ a {
  }
 
 .list__item[value='1']:after {
-     content: 'isAssigned';
-     color:green;
-     position: absolute;
-     top: 0;
-     right: 0;
- }
+      content: 'isAssigned';
+      color:green;
+      position: absolute;
+      top: 0;
+      right: 0;
+  }
+
+.list__item[value='2']:after {
+    content: 'Posted';
+    color:green;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
 
 .list__button {

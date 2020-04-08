@@ -5,21 +5,22 @@ import {useHttp} from '../../hooks/http.hook';
 import {useMessage} from '../../hooks/message.hook';
 import {AuthContext} from '../../context/AuthContext';
 
-const TruckDetails = (props) => {
+const LoadDetails = (props) => {
   const id = props.match.params.id;
   const auth = useContext(AuthContext);
   const user = useContext(UserContext);
-  const [truck] = user.trucksData.filter(item=> item._id === id);
+  const [load] = user.loadsData.filter(item=> item._id === id);
   const {loading, request} = useHttp();
   const message = useMessage();
   const [form, setForm] = useState({
     userId: auth.userData.id,
-    id: truck._id,
-    model: truck.model,
-    width: truck.dimensions.width,
-    height: truck.dimensions.height,
-    length: truck.dimensions.length,
-    payload: truck.payload,
+    id: load._id,
+    name:load.name,
+    width: load.dimensions.width,
+    height: load.dimensions.height,
+    length: load.dimensions.length,
+    pickUpAddress: load.pickUpAddress,
+    deliveryAddress: load.deliveryAddress,
   });
 
 
@@ -31,9 +32,9 @@ const TruckDetails = (props) => {
     e.preventDefault();
 
     try{
-      const data  = await request('/api/truck', 'PATCH',{...form});
+      const data  = await request('/api/load', 'PATCH',{...form});
       message(data.message);
-      user.editOneTruck(data.truck._id, data.truck);
+      user.editOneLoad(data.load._id, data.load);
 
     }catch(e){
       message(e.message);
@@ -42,18 +43,18 @@ const TruckDetails = (props) => {
 
   return (
     <div className="user">
-      <Link to ="/user_trucks" className="button__close">✖</Link>
+      <Link to ="/user_loads" className="button__close">✖</Link>
       <form className="user__form form" onSubmit={handleSubmitForm}>
-        <h3 className="form__title">Change truck</h3>
+        <h3 className="form__title">Change load</h3>
         <p className="form__p">
           <input
             className="form__input"
             type="text"
-            id="model"
-            name="model"
-            placeholder="Car model"
+            id="name"
+            name="name"
+            placeholder="Name"
             required
-            defaultValue={truck.model}
+            defaultValue={load.name}
             onChange={changeHandler}
           />
         </p>
@@ -65,7 +66,7 @@ const TruckDetails = (props) => {
             name="width"
             placeholder="Width, sm"
             required
-            defaultValue={truck.dimensions.width}
+            defaultValue={load.dimensions.width}
             onChange={changeHandler}
           />
         </p>
@@ -77,7 +78,7 @@ const TruckDetails = (props) => {
             name="height"
             placeholder="Height, sm"
             required
-            defaultValue={truck.dimensions.height}
+            defaultValue={load.dimensions.height}
             onChange={changeHandler}
           />
         </p>
@@ -89,7 +90,7 @@ const TruckDetails = (props) => {
             name="length"
             placeholder="Length, sm"
             required
-            defaultValue={truck.dimensions.length}
+            defaultValue={load.dimensions.length}
             onChange={changeHandler}
           />
         </p>
@@ -97,11 +98,35 @@ const TruckDetails = (props) => {
           <input
             className="form__input"
             type="number"
-            id="payload"
-            name="payload"
-            placeholder="Payload, kg"
+            id="weight"
+            name="weight"
+            placeholder="Weight, kg"
             required
-            defaultValue={truck.payload}
+            defaultValue={load.weight}
+            onChange={changeHandler}
+          />
+        </p>
+        <p className="form__p">
+          <input
+            className="form__input"
+            type="text"
+            id="address1"
+            name="pickUpAddress"
+            placeholder="Pick up address"
+            required
+            defaultValue={load.pickUpAddress}
+            onChange={changeHandler}
+          />
+        </p>
+        <p className="form__p">
+          <input
+            className="form__input"
+            type="text"
+            id="address2"
+            name="deliveryAddress"
+            placeholder="Delivery address"
+            required
+            defaultValue={load.deliveryAddress}
             onChange={changeHandler}
           />
         </p>
@@ -109,7 +134,7 @@ const TruckDetails = (props) => {
           <input
             className="form__submit"
             type="submit"
-            value = "Change truck"
+            value = "Change load"
             disabled={loading}
           />
         </p>
@@ -118,4 +143,4 @@ const TruckDetails = (props) => {
   )
 };
 
-export default TruckDetails
+export default LoadDetails

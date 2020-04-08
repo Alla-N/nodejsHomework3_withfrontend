@@ -2,18 +2,18 @@ const {Schema, model, Types} = require('mongoose');
 
 
 const LoadSchema = new Schema({
-  name: String,
-  status: String,
-  created_by: String,
-  assigned_to: String,
-  type: String,
+  name: {type: String, required: true},
+  status: {type: String, required: true},
   dimensions: {
-    width: Number,
-    height: Number,
-    length: Number,
+    width: {type: String, required: true},
+    height: {type: String, required: true},
+    length: {type: String, required: true},
   },
-  payload: Number,
-  links: [{type: Types.ObjectId, ref: 'Users'}],
+  weight: {type: String, required: true},
+  pickUpAddress: {type: String, required: true},
+  deliveryAddress: {type: String, required: true},
+  created_by: {type: Types.ObjectId, ref: 'User', required: true},
+  assigned_to: {type: Types.ObjectId, ref: 'User'},
 });
 
 
